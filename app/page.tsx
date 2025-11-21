@@ -2,6 +2,9 @@ import { supabase } from '@/lib/supabase'
 import AddTaskForm from './components/AddTaskForm'
 import TaskItem from './components/TaskItem'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function Home() {
   // Fetch tasks from Supabase
   const { data: tasks } = await supabase
