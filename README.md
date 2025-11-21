@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager
 
-## Getting Started
+A full-stack task management application built with Next.js 15, Supabase, and TypeScript. Features real-time CRUD operations with a clean, responsive interface.
 
-First, run the development server:
+## 🚀 Live Demo
 
+**[View Live Application](https://task-manager-kappa-mocha.vercel.app/)**
+
+## ✨ Features
+
+- ✅ Create, read, update, and delete tasks
+- ✅ Real-time database synchronization
+- ✅ Responsive design - works on desktop and mobile
+- ✅ Clean, modern UI with Tailwind CSS
+- ✅ Type-safe with TypeScript
+- ✅ Server-side rendering for optimal performance
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js 15 (App Router), React, TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** Supabase (PostgreSQL)
+- **Deployment:** Vercel
+- **Package Manager:** pnpm
+
+## 📸 Screenshots
+
+![Task Manager Interface](screenshot.png)
+*Simple and intuitive task management interface*
+
+## 🏃 Running Locally
+
+### Prerequisites
+
+- Node.js 18+ installed
+- pnpm installed (`npm install -g pnpm`)
+- Supabase account (free tier)
+
+### Setup Instructions
+
+1. **Clone the repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/emileEmileEmile/task-manager.git
+cd task-manager
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Set up Supabase**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a new project at [supabase.com](https://supabase.com) and run this SQL in the SQL Editor:
 
-## Learn More
+```sql
+create table tasks (
+  id uuid default gen_random_uuid() primary key,
+  title text not null,
+  completed boolean default false,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Configure environment variables**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy `.env.example` to `.env.local`:
+```bash
+cp .env.example .env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add your Supabase credentials to `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-## Deploy on Vercel
+You can find these in your Supabase project settings under **API**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Run the development server**
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
+
+## 📁 Project Structure
+
+```
+task-manager/
+├── app/
+│   ├── components/
+│   │   ├── AddTaskForm.tsx    # Form for creating new tasks
+│   │   └── TaskItem.tsx        # Individual task component
+│   ├── page.tsx                # Main page with task list
+│   ├── layout.tsx              # Root layout
+│   └── globals.css             # Global styles
+├── lib/
+│   └── supabase.ts             # Supabase client configuration
+├── .env.local                  # Environment variables (not in repo)
+└── package.json
+```
+
+## 🎯 What I Learned
+
+Building this project taught me:
+
+- **Next.js App Router:** Server components, dynamic rendering, and the modern Next.js paradigm
+- **Supabase Integration:** Real-time PostgreSQL database with a simple JavaScript client
+- **Deployment:** Vercel deployment pipeline with environment variable management
+- **TypeScript:** Type-safe React components and API calls
+- **Dynamic Rendering:** Solving static generation issues for real-time data (`export const dynamic = 'force-dynamic'`)
+
+## 🔮 Future Improvements
+
+- [ ] Add user authentication (Supabase Auth)
+- [ ] Implement task categories/tags
+- [ ] Add due dates and priority levels
+- [ ] Dark mode toggle
+- [ ] Task search and filtering
+- [ ] Drag-and-drop task reordering
+
+## 🐛 Known Issues
+
+None currently! The app works reliably on all modern browsers and devices.
+
+## 📝 License
+
+MIT License - feel free to use this project for learning or as a template for your own apps.
+
+## 🤝 Contributing
+
+This is a learning project, but suggestions and improvements are welcome! Feel free to open an issue or submit a pull request.
+
+---
+
+**Built by Emile** | [GitHub](https://github.com/emileEmileEmile) | Learning Full-Stack Development (2024-2025)
