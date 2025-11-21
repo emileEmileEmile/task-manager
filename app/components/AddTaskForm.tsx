@@ -2,31 +2,33 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
-//import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function AddTaskForm() {
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
-  //const router = useRouter()
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-  
-    if (!title.trim()) return
+    
+    if (!title.trim()) return // Don't submit empty tasks
     
     setLoading(true)
     
+    // Insert new task into Supabase
     const { error } = await supabase
       .from('tasks')
       .insert({ title: title.trim() })
     
     if (error) {
       alert('Error creating task: ' + error.message)
-      setLoading(false)
     } else {
-      setTitle('')
-      window.location.reload()
+      setTitle('') // Clear the input
+      router.refresh() // Refresh the page to show new task
     }
+    
+    setLoading(false)
   }
 
   return (

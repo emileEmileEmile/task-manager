@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
-//import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 type Task = {
   id: string
@@ -12,11 +12,11 @@ type Task = {
 
 export default function TaskItem({ task }: { task: Task }) {
   const [loading, setLoading] = useState(false)
-  //const router = useRouter()
+  const router = useRouter()
 
   async function toggleComplete() {
     setLoading(true)
-  
+    
     const { error } = await supabase
       .from('tasks')
       .update({ is_complete: !task.is_complete })
@@ -24,15 +24,16 @@ export default function TaskItem({ task }: { task: Task }) {
     
     if (error) {
       alert('Error updating task: ' + error.message)
-      setLoading(false)
     } else {
-      window.location.reload()
+      router.refresh()
     }
+    
+    setLoading(false)
   }
 
   async function deleteTask() {
     if (!confirm('Are you sure you want to delete this task?')) return
-  
+    
     setLoading(true)
     
     const { error } = await supabase
@@ -42,10 +43,11 @@ export default function TaskItem({ task }: { task: Task }) {
     
     if (error) {
       alert('Error deleting task: ' + error.message)
-      setLoading(false)
     } else {
-      window.location.reload()
+      router.refresh()
     }
+    
+    setLoading(false)
   }
 
   return (
