@@ -11,25 +11,22 @@ export default function AddTaskForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    
-    if (!title.trim()) return // Don't submit empty tasks
+  
+    if (!title.trim()) return
     
     setLoading(true)
     
-    // Insert new task into Supabase
     const { error } = await supabase
       .from('tasks')
       .insert({ title: title.trim() })
     
     if (error) {
       alert('Error creating task: ' + error.message)
+      setLoading(false)
     } else {
-      setTitle('') // Clear the input
-      //router.refresh() // Refresh the page to show new task
+      setTitle('')
       window.location.reload()
     }
-    
-    setLoading(false)
   }
 
   return (

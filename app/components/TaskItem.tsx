@@ -16,7 +16,7 @@ export default function TaskItem({ task }: { task: Task }) {
 
   async function toggleComplete() {
     setLoading(true)
-    
+  
     const { error } = await supabase
       .from('tasks')
       .update({ is_complete: !task.is_complete })
@@ -24,17 +24,15 @@ export default function TaskItem({ task }: { task: Task }) {
     
     if (error) {
       alert('Error updating task: ' + error.message)
+      setLoading(false)
     } else {
-      //router.refresh()
       window.location.reload()
     }
-    
-    setLoading(false)
   }
 
   async function deleteTask() {
     if (!confirm('Are you sure you want to delete this task?')) return
-    
+  
     setLoading(true)
     
     const { error } = await supabase
@@ -44,12 +42,10 @@ export default function TaskItem({ task }: { task: Task }) {
     
     if (error) {
       alert('Error deleting task: ' + error.message)
+      setLoading(false)
     } else {
-      //router.refresh()
       window.location.reload()
     }
-    
-    setLoading(false)
   }
 
   return (
