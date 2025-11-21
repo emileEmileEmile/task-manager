@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
 
 type Task = {
   id: string
@@ -12,7 +12,7 @@ type Task = {
 
 export default function TaskItem({ task }: { task: Task }) {
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  //const router = useRouter()
 
   async function toggleComplete() {
     setLoading(true)
@@ -25,7 +25,8 @@ export default function TaskItem({ task }: { task: Task }) {
     if (error) {
       alert('Error updating task: ' + error.message)
     } else {
-      router.refresh()
+      //router.refresh()
+      window.location.reload()
     }
     
     setLoading(false)
@@ -44,7 +45,8 @@ export default function TaskItem({ task }: { task: Task }) {
     if (error) {
       alert('Error deleting task: ' + error.message)
     } else {
-      router.refresh()
+      //router.refresh()
+      window.location.reload()
     }
     
     setLoading(false)
